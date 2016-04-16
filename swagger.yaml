@@ -11,10 +11,10 @@ info:
   license:
     name: MIT
     url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
-host: petstore.swagger.io
+host: platform.citydataexchange.com
 basePath: /api
 schemes:
-  - http
+  - https
 consumes:
   - application/json
 produces:

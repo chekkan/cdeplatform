@@ -57,15 +57,15 @@ paths:
           schema:
             $ref: '#/definitions/Error'
     post:
-      description: Creates a new pet in the store.  Duplicates are allowed
-      operationId: addPet
+      description: Creates a new order.
+      operationId: newOrder
       parameters:
-        - name: pet
+        - name: order
           in: body
-          description: Pet to add to the store
+          description: Order to create.
           required: true
           schema:
-            $ref: '#/definitions/NewPet'
+            $ref: '#/definitions/NewOrder'
       responses:
         200:
           description: pet response
@@ -140,20 +140,20 @@ definitions:
         format: int32
       message:
         type: string
+        
   Order:
+    allOf:
+      - $ref: '#/definitions/NewOrder'
     required:
       - id
+      - items
       - credit
       - created
       - modified
       - status
-      - payment
     properties:
       id:
         type: string
-      credit:
-        type: integer
-        format: int64
       created:
         type: string
         format: date-time
@@ -166,6 +166,17 @@ definitions:
           - pending
           - approved
           - rejected
+        
+  NewOrder:
+    required:
+      - payment
+      - items
+    properties:
+      items:
+        type: array
+      credit:
+        type: integer
+        format: int64
       payment:
         $ref: '#/definitions/Payment'
   

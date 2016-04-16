@@ -70,7 +70,7 @@ paths:
         200:
           description: pet response
           schema:
-            $ref: '#/definitions/Pet'
+            $ref: '#/definitions/Order'
         default:
           description: unexpected error
           schema:
@@ -96,23 +96,6 @@ paths:
             $ref: '#/definitions/Error'
 
 definitions:
-  Pet:
-    allOf:
-      - $ref: '#/definitions/NewPet'
-      - required:
-        - id
-        properties:
-          id:
-            type: integer
-            format: int64
-  NewPet:
-    required:
-      - name
-    properties:
-      name:
-        type: string
-      tag:
-        type: string
   Error:
     required:
       - code

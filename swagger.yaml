@@ -20,33 +20,38 @@ consumes:
 produces:
   - application/json
 paths:
-  /pets:
+  /orders:
     get:
       description: |
-        Returns all pets from the system that the user has access to
-      operationId: findPets
+        Returns all orders from the system that the user has access to.
+      operationId: getOrders
       parameters:
-        - name: tags
+        - name: size
           in: query
-          description: tags to filter by
+          description: maximum number of results to return
           required: false
-          type: array
+          type: number
+          format: int32
           collectionFormat: csv
           items:
             type: string
-        - name: limit
+        - name: page
           in: query
-          description: maximum number of results to return
+          description: page number
           required: false
           type: integer
           format: int32
       responses:
         200:
-          description: pet response
+          description: order response
           schema:
             type: array
             items:
-              $ref: '#/definitions/Pet'
+              $ref: '#/definitions/Order'
+          headers:
+            X-Rate-Limit-Limit:
+              description: The number of allowed requests in the current period
+              type: integer
         default:
           description: unexpected error
           schema:
@@ -134,4 +139,90 @@ definitions:
         type: integer
         format: int32
       message:
+        type: string
+  Order:
+    required:
+      - id
+      - credit
+      - created
+      - modified
+      - status
+      - payment
+    properties:
+      id:
+        type: string
+      credit:
+        type: integer
+        format: int64
+      created:
+        type: string
+        format: date-time
+      modified:
+        type: string
+        format: date-time
+      status:
+        type: string
+        enum: 
+          - pending
+          - approved
+          - rejected
+      payment:
+        $ref: '#/definitions/Payment'
+  
+  Payment:
+    allOf:
+      - $ref: '#/definitions/InvoicePayment'
+      - required:
+        - type
+        - data
+      - $ref: '#/definitions/PaypalPayment'
+      - required:
+        - type
+        - data
+    
+  InvoicePayment:
+    properties:
+      type:
+        type: string
+        enum:
+          - invoice
+      data:
+        $ref: '#/definitions/InvoicePaymentData'
+        
+  InvoicePaymentData:
+    required:
+      - firstName
+      - lastName
+      - companyName
+      - address
+      - city
+      - country
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      companyName:
+        type: string
+      address:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+        
+  PaypalPayment:
+    properties:
+      type:
+        type: string
+        enum:
+          - paypal
+      data:
+        $ref: '#/definitions/PaypalPaymentData'
+        
+  PaypalPaymentData:
+    required:
+      - token
+    properties:
+      token: 
         type: string

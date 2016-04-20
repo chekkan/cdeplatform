@@ -20,6 +20,17 @@ consumes:
 produces:
   - application/json
 paths:
+  /datasets/_stats:
+    get:
+      description: |
+        Returns the stats about datasets
+      operationId: getDatasetStats
+      responses:
+        200:
+          description: dataset stats response
+          schema: 
+            $ref: '#/definitions/DatasetStats'
+
   /orders:
     get:
       description: |
@@ -203,3 +214,8 @@ definitions:
     properties:
       token: 
         type: string
+        
+  DatasetStats:
+    properties:
+      publishedBytesTotalSize:
+        type: number

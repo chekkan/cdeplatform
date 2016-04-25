@@ -145,6 +145,19 @@ definitions:
           - monthly
           - weekly
           - free
+      supplierName:
+        type: string
+      datasetUploadFrequeny:
+        type: string
+        enum:
+          - selectFrequency
+          - oneTime
+          - hourly
+          - daily
+          - weekly
+          - monthly
+          - quarterly
+          - annually
         
   Order:
     allOf:

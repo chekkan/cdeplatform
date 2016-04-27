@@ -147,6 +147,11 @@ definitions:
         type: boolean
         
   DatasetAudit:
+    required:
+      - id
+      - datasetId
+      - message
+      - timestamp
     properties:
       id:
         type: string

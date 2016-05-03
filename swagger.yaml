@@ -57,7 +57,9 @@ paths:
         200:
           description: categories response
           schema:
-            $ref: '#/definitions/DatasetCategory'
+            type: array
+            items:
+              $ref: '#/definitions/DatasetCategory'
       
 
   /orders:

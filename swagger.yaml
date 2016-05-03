@@ -50,6 +50,16 @@ paths:
             items:
               $ref: '#/definitions/DatasetAudit'
 
+  /categories:
+    get:
+      operationId: getCategories
+      responses:
+        200:
+          description: categories response
+          schema:
+            $ref: '#/definitions/DatasetCategory'
+      
+
   /orders:
     get:
       description: |
@@ -297,3 +307,13 @@ definitions:
     properties:
       publishedBytesTotalSize:
         type: number
+        
+  DatasetCategory:
+    required:
+      - name
+      - description
+    properties:
+      name:
+        type: string
+      description:
+        type: string

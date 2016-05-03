@@ -307,7 +307,7 @@ definitions:
         
   DatasetStats:
     properties:
-      dataSizethe :
+      dataSize :
         type: number
         
   DatasetCategory:

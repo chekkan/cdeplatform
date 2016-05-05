@@ -60,6 +60,32 @@ paths:
             type: array
             items:
               $ref: '#/definitions/DatasetCategory'
+    
+    post:
+      operationId: postCatergory
+      parameters:
+        - name: X-Content-Language
+          in: header
+          description: language of the content
+          type: string
+      responses:
+        202:
+          description: categories response
+          schema:
+            $ref: '#/definitions/DatasetCategory'
+            
+    put:
+      operationId: putCatergory
+      parameters:
+        - name: X-Content-Language
+          in: header
+          description: language of the content
+          type: string
+      responses:
+        202:
+          description: categories response
+          schema:
+            $ref: '#/definitions/DatasetCategory'
       
 
   /orders:

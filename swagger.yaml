@@ -74,6 +74,7 @@ paths:
           schema:
             $ref: '#/definitions/DatasetCategory'
             
+  /categories/{id}:
     put:
       operationId: putCatergory
       parameters:
@@ -81,6 +82,11 @@ paths:
           in: header
           description: language of the content
           type: string
+        - name: id
+          in: path
+          type: string
+          required: true
+          description: category to update
       responses:
         202:
           description: categories response
@@ -338,9 +344,12 @@ definitions:
         
   DatasetCategory:
     required:
+      - id
       - name
       - description
     properties:
+      id:
+        type: string
       name:
         type: string
       description:

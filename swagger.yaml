@@ -31,11 +31,28 @@ paths:
           schema: 
             $ref: '#/definitions/DatasetStats'
             
+  /datasets/{id}:
+    get:
+      description: |
+        Returns a specific dataset with the supplied id.
+      operationId: getDataset
+      parameters:
+        - name: id
+          in: path
+          description: ID of the dataset to fetch
+          required: true
+          type: string
+      responses:
+        200:
+          description: dataset response
+          schema:
+            $ref: '#/definitions/Dataset'
+            
   /datasets/{id}/audits:
     get:
       description: |
         Returns the audits for datasets
-      operationId: getDatasetStats
+      operationId: getDatasetAudits
       parameters:
         - name: id
           in: path
@@ -336,6 +353,21 @@ definitions:
     properties:
       token: 
         type: string
+  
+  Dataset:
+    required:
+      - id
+      - name
+      - description
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      rating:
+        type: integer
         
   DatasetStats:
     properties:

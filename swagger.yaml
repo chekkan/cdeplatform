@@ -212,7 +212,6 @@ paths:
           type: number
       responses:
         200:
-          200:
           description: umbraco collection or object
           schema:
             type: array
@@ -232,13 +231,12 @@ paths:
       operationId: umbraco content
       parameters:
         - name: id
-          in: query
+          in: path
           description: id of the content to return
           required: true
           type: string
       responses:
         200:
-          200:
           description: umbraco content object
           schema:
             $ref: '#/definitions/UmbracoContent'

@@ -28,9 +28,9 @@ paths:
       responses:
         200:
           description: dataset stats response
-          schema: 
+          schema:
             $ref: '#/definitions/DatasetStats'
-            
+
   /datasets/{id}:
     get:
       description: |
@@ -47,7 +47,7 @@ paths:
           description: dataset response
           schema:
             $ref: '#/definitions/Dataset'
-            
+
   /datasets/{id}/audits:
     get:
       description: |
@@ -62,7 +62,7 @@ paths:
       responses:
         200:
           description: dataset audits response
-          schema: 
+          schema:
             type: array
             items:
               $ref: '#/definitions/DatasetAudit'
@@ -77,7 +77,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/DatasetCategory'
-    
+
     post:
       operationId: postCatergory
       parameters:
@@ -90,7 +90,7 @@ paths:
           description: categories response
           schema:
             $ref: '#/definitions/DatasetCategory'
-            
+
   /categories/{id}:
     put:
       operationId: putCatergory
@@ -109,7 +109,7 @@ paths:
           description: categories response
           schema:
             $ref: '#/definitions/DatasetCategory'
-      
+
 
   /orders:
     get:
@@ -185,6 +185,67 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /umbraco:
+    get:
+      description: Returns umbraco content list at specified path
+      operationId: umbraco list
+      parameters:
+        - name: path
+          in: query
+          description: path of content to fetch
+          required: true
+          type: string
+        - name: search
+          in: query
+          description: text to search
+          required: false
+          type: string
+        - name: from
+          in: query
+          description: first element to return starting at 1
+          required: false
+          type: number
+        - name: size
+          in: query
+          description: max number of elements to return
+          required: false
+          type: number
+      responses:
+        200:
+          200:
+          description: umbraco collection or object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UmbracoContent'
+          headers:
+            X-Total-Count:
+              description: Total number of items in the server
+              type: integer
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /umbraco/{id}:
+    get:
+      description: Returns umbraco content item at specified path
+      operationId: umbraco content
+      parameters:
+        - name: id
+          in: query
+          description: id of the content to return
+          required: true
+          type: string
+      responses:
+        200:
+          200:
+          description: umbraco content object
+          schema:
+            $ref: '#/definitions/UmbracoContent'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 
 definitions:
   Error:
@@ -197,7 +258,7 @@ definitions:
         format: int32
       message:
         type: string
-        
+
   SmartCityString:
     properties:
       value:
@@ -206,7 +267,7 @@ definitions:
         type: string
       isDefault:
         type: boolean
-        
+
   DatasetAudit:
     required:
       - id
@@ -223,14 +284,14 @@ definitions:
       timestamp:
         type: string
         format: date-time
-        
+
   BasketItem:
     properties:
       datasetId:
         type: string
-      name: 
+      name:
         type: array
-        items: 
+        items:
           $ref: '#/definitions/SmartCityString'
       price:
         type: number
@@ -255,7 +316,7 @@ definitions:
           - monthly
           - quarterly
           - annually
-        
+
   Order:
     allOf:
       - $ref: '#/definitions/NewOrder'
@@ -277,11 +338,11 @@ definitions:
         format: date-time
       status:
         type: string
-        enum: 
+        enum:
           - pending
           - approved
           - rejected
-        
+
   NewOrder:
     required:
       - payment
@@ -295,7 +356,7 @@ definitions:
         format: int64
       payment:
         $ref: '#/definitions/Payment'
-  
+
   Payment:
     allOf:
       - $ref: '#/definitions/InvoicePayment'
@@ -306,7 +367,7 @@ definitions:
       - required:
         - type
         - data
-    
+
   InvoicePayment:
     properties:
       type:
@@ -315,7 +376,7 @@ definitions:
           - invoice
       data:
         $ref: '#/definitions/InvoicePaymentData'
-        
+
   InvoicePaymentData:
     required:
       - firstName
@@ -337,7 +398,7 @@ definitions:
         type: string
       country:
         type: string
-        
+
   PaypalPayment:
     properties:
       type:
@@ -346,14 +407,14 @@ definitions:
           - paypal
       data:
         $ref: '#/definitions/PaypalPaymentData'
-        
+
   PaypalPaymentData:
     required:
       - token
     properties:
-      token: 
+      token:
         type: string
-  
+
   Dataset:
     required:
       - id
@@ -368,12 +429,12 @@ definitions:
         type: string
       rating:
         type: integer
-        
+
   DatasetStats:
     properties:
       dataSize :
         type: number
-        
+
   DatasetCategory:
     required:
       - id
@@ -385,4 +446,11 @@ definitions:
       name:
         type: string
       description:
+        type: string
+
+  UmbracoContent:
+    properties:
+      id:
+        type: string
+      name:
         type: string

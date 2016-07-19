@@ -245,6 +245,18 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+  /users:
+    get:
+        description: Returns umbraco content list at specified path
+        operationId: listUsers
+        responses:
+          200:
+            description: user collection or object
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/User'
+
 definitions:
   Error:
     required:
@@ -452,3 +464,16 @@ definitions:
         type: string
       name:
         type: string
+        
+  User:
+    required:
+      - id
+      - type
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+        enum:
+          - user
+          - company

@@ -31,6 +31,19 @@ paths:
           schema:
             $ref: '#/definitions/DatasetStats'
 
+  /datasets:
+    get:
+      description: |
+        List of datasets
+      operationId: listDatasets
+      responses:
+        200:
+          description: datasets array
+          schema: 
+            type: array
+            items:
+              $ref: '#/definitions/Dataset'
+
   /datasets/{id}:
     get:
       description: |
@@ -255,7 +268,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/definitions/User'
+                $ref: '#/definitions/Account'
 
 definitions:
   Error:
@@ -430,6 +443,9 @@ definitions:
       - id
       - name
       - description
+      - frequency
+      - status
+      - supplier
     properties:
       id:
         type: string
@@ -439,6 +455,21 @@ definitions:
         type: string
       rating:
         type: integer
+      frequency: 
+        type: string
+        enum:
+          - once
+          - hourly
+          - daily
+          - weekly
+          - monthly
+          - yearly
+      status:
+        type: string
+        enum:
+          - published
+      supplier:
+        $ref: '#/definitions/Account'
 
   DatasetStats:
     properties:
@@ -465,7 +496,7 @@ definitions:
       name:
         type: string
         
-  User:
+  Account:
     required:
       - id
       - type
@@ -477,3 +508,19 @@ definitions:
         enum:
           - user
           - company
+        
+  User:
+    allOf:
+      - $ref: '#/definitions/Account'
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+          
+  Company:
+    allOf:
+      - $ref: '#/definitions/Account'
+    properties:
+      name:
+        type: string
